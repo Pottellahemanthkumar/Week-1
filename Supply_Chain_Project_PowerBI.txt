@@ -1,0 +1,166 @@
+
+**Project Title:**
+**"Supply Chain Performance Dashboard Using Power BI"**
+
+---
+
+### **Objective:**
+To create a Power BI dashboard that visualizes key performance metrics of a supply chain, including inventory levels, supplier performance, and order fulfillment, to enable data-driven decision-making.
+
+---
+
+### **Project Overview:**
+This project analyzes a hypothetical supply chain dataset to monitor and optimize performance. The dashboard will track:
+1. Inventory levels across warehouses.
+2. Supplier performance (on-time delivery, order accuracy, and lead time).
+3. Order fulfillment metrics (on-time vs delayed orders, shipment costs).
+4. Regional performance in transportation efficiency.
+
+---
+
+### **Dataset Details:**
+The project uses three tables:
+
+#### 1. **Inventory Table:**
+| ProductID | ProductName    | Warehouse | StockQuantity | ReorderLevel |
+|-----------|----------------|-----------|---------------|--------------|
+| 101       | Product A      | WH1       | 500           | 300          |
+| 102       | Product B      | WH2       | 150           | 200          |
+| 103       | Product C      | WH1       | 100           | 120          |
+| 104       | Product D      | WH2       | 50            | 80           |
+
+#### 2. **Supplier Performance Table:**
+| SupplierID | SupplierName   | LeadTime (days) | OnTimeDelivery (%) | OrderAccuracy (%) |
+|------------|----------------|-----------------|--------------------|--------------------|
+| S01        | Supplier X     | 5               | 90                 | 95                 |
+| S02        | Supplier Y     | 8               | 85                 | 88                 |
+| S03        | Supplier Z     | 7               | 80                 | 92                 |
+
+#### 3. **Orders Table:**
+| OrderID | OrderDate  | DeliveryDate | Status    | Cost  | Region |
+|---------|------------|--------------|-----------|-------|--------|
+| O001    | 2024-01-01 | 2024-01-05   | On-Time   | 120   | North  |
+| O002    | 2024-01-03 | 2024-01-09   | Delayed   | 200   | South  |
+| O003    | 2024-01-05 | 2024-01-08   | On-Time   | 150   | East   |
+| O004    | 2024-01-10 | 2024-01-14   | Delayed   | 250   | West   |
+
+---
+
+### **Steps to Create the Project:**
+
+#### **1. Data Preparation:**
+1. Create the above dataset in Excel or a CSV file.
+2. Load the data into Power BI by clicking **Home > Get Data** and selecting Excel or CSV files.
+3. Check and establish relationships between tables:
+   - Connect **Orders Table** to **Inventory Table** using `ProductID`.
+   - Connect **Orders Table** to **Supplier Table** using `SupplierID`.
+
+---
+
+#### **2. Create Key Performance Indicators (KPIs):**
+Use DAX (Data Analysis Expressions) to calculate the following metrics:
+
+**a. Total Stock**
+```DAX
+Total Stock = SUM(Inventory[StockQuantity])
+```
+
+**b. Reorder Alerts (Count of Low-Stock Products)**
+```DAX
+Reorder Alerts = 
+COUNTROWS(
+    FILTER(
+        Inventory,
+        Inventory[StockQuantity] <= Inventory[ReorderLevel]
+    )
+)
+```
+
+**c. On-Time Delivery Percentage**
+```DAX
+On-Time Delivery % = 
+DIVIDE(
+    COUNTROWS(FILTER(Orders, Orders[Status] = "On-Time")),
+    COUNTROWS(Orders),
+    0
+) * 100
+```
+
+**d. Average Transportation Cost**
+```DAX
+Avg Transportation Cost = AVERAGE(Orders[Cost])
+```
+
+**e. Average Lead Time**
+```DAX
+Avg Lead Time = AVERAGE(SupplierPerformance[LeadTime (days)])
+```
+
+---
+
+#### **3. Create Visualizations:**
+
+**Dashboard Design:**
+1. **KPI Cards:**
+   - Total Stock
+   - Reorder Alerts
+   - On-Time Delivery %
+   - Avg Transportation Cost
+
+2. **Bar Chart:**
+   - **X-Axis:** Product Name
+   - **Y-Axis:** Stock Quantity
+
+3. **Table Visualization:**
+   - Display Supplier Performance (Lead Time, On-Time Delivery %, Order Accuracy %).
+
+4. **Map Visualization:**
+   - Plot orders by region using `Region` from the Orders table.
+
+5. **Line Chart:**
+   - **X-Axis:** Order Date
+   - **Y-Axis:** On-Time Delivery % over time.
+
+6. **Pie Chart:**
+   - Share of delayed vs on-time orders.
+
+---
+
+#### **4. Add Interactivity:**
+1. Add slicers for filtering by:
+   - Date Range
+   - Product
+   - Region
+2. Use drill-through and tooltips to provide detailed insights for specific suppliers or regions.
+
+---
+
+#### **5. Insights and Recommendations:**
+1. **Key Findings:**
+   - Identify warehouses with low stock levels to avoid stockouts.
+   - Highlight suppliers with long lead times for improvement.
+   - Monitor regions with high transportation costs and delays.
+
+2. **Recommendations:**
+   - Optimize inventory levels by increasing stock for high-demand products.
+   - Negotiate better terms with underperforming suppliers.
+   - Optimize shipping routes to reduce delays and costs.
+
+---
+
+### **Deliverables:**
+1. **Power BI File (.pbix):** Contains the interactive dashboard.
+2. **PDF Report:** Summarizing the findings and recommendations.
+3. **Sample Dataset:** Excel or CSV files used for the project.
+
+---
+
+### **How to Submit the Project:**
+1. Export the Power BI dashboard as a PDF or publish it to the Power BI Service for sharing.
+2. Include the dataset and Power BI file in a zip folder.
+3. Write a short summary of the project in a ReadMe file explaining:
+   - Objectives
+   - Steps taken
+   - Key insights from the dashboard.
+
+Would you like assistance in creating the dataset or refining the dashboard further?
